@@ -1,0 +1,67 @@
+npx shadcn@latest init -> Prepare start setup shadcn ui |=> and go to block install example dashboard for test Dark Mode
+npx shadcn@latest add dashboard-01 |-> we will get components work for dashboard ui
+npm install next-themes            |-> setup theme Mode
+
+Create File{
+      - thems-provider.tsx  |-> copy all from doccument
+      - theme-toggler.tsx   |-> copy all from doccument from Dark Mode
+      + setup this code into layout  {
+            <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+      }
+}
+
++ summary UI use in projects ->
+
+{
+
+      - shadcn ui
+      - MUI (Material UI)
+      - Chakra UI
+      - Tailwind + Headless UI
+
+
+
+}
+
+for animations {
+      - npm install framer-motion
+}
+{
+
+1. React Hook Form (RHF)
+Purpose: Handles form state, input values, validation, and submission.
+What it does: Tracks what the user typed, validates it, and gives you the data when the user submits.
+Example: useForm, register, handleSubmit.
+2. ShadCN UI
+Purpose: Provides beautiful, accessible UI components for your form.
+What it does: Lets you render inputs, buttons, labels, error messages, etc., without writing all the CSS yourself.
+Example: Input, Button, FormField, FormMessage.
+}
+
+{
+✅ Key Point
+You don’t choose one OR the other — you use both together:
+RHF → manages the form logic (state + validation)
+ShadCN UI → displays the inputs, buttons, labels, error messages
+Analogy:
+RHF is the engine of a car (logic).
+ShadCN UI is the body + interior (looks & accessibility).
+You need both for a smooth, complete form.
+}
+
+{
+Recommended Approach
+Use React Hook Form for form handling.
+Use ShadCN UI components for rendering inputs, labels, buttons, and error messages.
+Combine them like in the example I showed earlier — RHF handles the state, ShadCN handles the UI
+}
+
+react-hook-form{
+      - @hookform/resolvers/yup
+      - @hookform/resolvers/zod
+}
