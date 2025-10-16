@@ -32,9 +32,7 @@ export function SiteHeader() {
             className="mx-2 data-[orientation=vertical]:h-4"
           />
 
-          <ModernNavigationMenu title="Hello update prop" />
-          <ModernNavigationMenu title="Hello update prop" />
-          <ModernNavigationMenu title="Hello update prop" />
+          <ModernNavigationMenu />
         </div>
 
         <div className="flex items-center">
