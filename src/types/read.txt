@@ -1,0 +1,1 @@
+Defind all your types in this file can make your code clean

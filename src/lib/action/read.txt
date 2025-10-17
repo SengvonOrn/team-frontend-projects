@@ -1,0 +1,10 @@
+For manage config to any action with api from internet such accessibility
+api Banking
+or 
+user Config 
+
+by we create |=>
+
+Ex:
+  
+   user.action.tsx

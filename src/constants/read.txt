@@ -1,0 +1,8 @@
+this file for add fake {api oject} your data testing 
+
+export const user {
+      name: "sengvon",
+      age: 21,
+}
+
+can export to use every where

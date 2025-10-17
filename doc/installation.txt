@@ -65,3 +65,16 @@ react-hook-form{
       - @hookform/resolvers/yup
       - @hookform/resolvers/zod
 }
+
+
+-----------------------concept one----------------------------------------->
+
+All manage content we need add layout on those page 
+
+--folder(dashboard)
+  --file(page)
+  --file(layout)  |=> all in page will wrapper onside layout
+  --file(not-fount) |=> for set file default not-fount page
+
+
+--------------------------------------------------------------------------->

@@ -3,19 +3,10 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { CircleCheckIcon, CircleHelpIcon, CircleIcon } from "lucide-react";
 import { ModeToggle } from "./theme-toggler";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-  NavigationMenuViewport,
-} from "@/components/ui/navigation-menu";
 
 import { ModernNavigationMenu } from "@/components/navbar-hover";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { UserMenu } from "./button-auth";
 interface ModernNavigationMenuProps {
   title: string;
 }
@@ -35,19 +26,17 @@ export function SiteHeader() {
           <ModernNavigationMenu />
         </div>
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-x-2">
           <div className="ml-auto flex items-center">
-            <Button variant="ghost" size="sm" className="hidden sm:flex">
-              New
-            </Button>
+            <UserMenu />
           </div>
-          <div className="ml-auto flex items-center gap-2">
-            <Button
-              variant="ghost"
-              asChild
-              size="sm"
-              className="hidden sm:flex cursor-pointer"
-            >
+          <Separator
+            orientation="vertical"
+            className="mx-2 data-[orientation=vertical]:h-4"
+          />
+
+          <div className="ml-auto flex items-center ">
+            <Button variant="ghost" asChild className="hidden w-[40px] sm:flex">
               <ModeToggle />
             </Button>
           </div>

@@ -110,13 +110,17 @@ export function ModernNavigationMenu() {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
+
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
             <Link href="/docs">Docs</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
+
         <NavigationMenuItem className="hidden md:block">
-          <NavigationMenuTrigger>List</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="text-lg">
+            List
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[300px] gap-4">
               <li>
@@ -148,6 +152,7 @@ export function ModernNavigationMenu() {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
+
         <NavigationMenuItem className="hidden md:block">
           <NavigationMenuTrigger className="text-lg">
             Simple
@@ -168,8 +173,11 @@ export function ModernNavigationMenu() {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
+
         <NavigationMenuItem className="hidden md:block">
-          <NavigationMenuTrigger>With Icon</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="text-lg">
+            With Icon
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[200px] gap-4">
               <li>
@@ -199,7 +207,6 @@ export function ModernNavigationMenu() {
     </NavigationMenu>
   );
 }
-
 function ListItem({
   title,
   children,
