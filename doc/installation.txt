@@ -73,7 +73,7 @@ All manage content we need add layout on those page
 
 --folder(dashboard)
   --file(page)
-  --file(layout)  |=> all in page will wrapper onside layout
+  --file(layout)  |=> all in page will wrapper inside layout
   --file(not-fount) |=> for set file default not-fount page
 
 

@@ -1,4 +1,4 @@
-this file for add fake {api oject} your data testing 
+this file for add fake {api oject} of your data testing 
 
 export const user {
       name: "sengvon",
