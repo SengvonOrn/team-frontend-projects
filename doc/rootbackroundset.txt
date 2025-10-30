@@ -1,0 +1,10 @@
+For Dark Mode we use properties |=> 
+
+
+bg-background/80  |=> for navheadersite
+
+
+{
+- bg-muted/50 => tranparent 50%
+}
+

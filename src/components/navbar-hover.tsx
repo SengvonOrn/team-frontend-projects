@@ -2,7 +2,20 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { CircleCheckIcon, CircleHelpIcon, CircleIcon } from "lucide-react";
+import {
+  ChartArea,
+  ChartBar,
+  CircleCheckIcon,
+  CircleHelpIcon,
+  CircleIcon,
+  HelpCircle,
+  HelpCircleIcon,
+  Search,
+  SearchIcon,
+  SendToBackIcon,
+  ShoppingBag,
+  StarIcon,
+} from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
@@ -14,44 +27,10 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
-  },
-  {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-  {
-    title: "Progress",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  },
-  {
-    title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
-  },
-  {
-    title: "Tabs",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-  },
-];
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { components } from "../constants/data";
+import { UserMenu } from "./button-auth";
 
 export function ModernNavigationMenu() {
   const isMobile = useIsMobile();
@@ -59,10 +38,12 @@ export function ModernNavigationMenu() {
   return (
     <NavigationMenu viewport={isMobile}>
       <NavigationMenuList className="flex-wrap">
+        {/* --------------------------Best Seller ---------------------------- */}
         <NavigationMenuItem>
           <NavigationMenuTrigger className="text-lg">
-            Home
+            Best Seller
           </NavigationMenuTrigger>
+
           <NavigationMenuContent>
             <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
@@ -92,9 +73,11 @@ export function ModernNavigationMenu() {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
+
+        {/* -----------------------------5 Star ------------------------------ */}
         <NavigationMenuItem>
           <NavigationMenuTrigger className="text-lg">
-            Components
+            <StarIcon className="mr-2" /> 5 Start Rate
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-2 sm:w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
@@ -110,23 +93,18 @@ export function ModernNavigationMenu() {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
-
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/docs">Docs</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-
+       {/* ---------------------Early Black Friday---------------- */}
         <NavigationMenuItem className="hidden md:block">
           <NavigationMenuTrigger className="text-lg">
-            List
+            <SendToBackIcon className="mr-2" />
+            Early Black Friday
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[300px] gap-4">
               <li>
                 <NavigationMenuLink asChild>
                   <Link href="#">
-                    <div className="font-medium text-lg">Components</div>
+                    <div className="font-medium text-lg">5 Start rate</div>
                     <div className="text-muted-foreground">
                       Browse all components in the library.
                     </div>
@@ -153,9 +131,11 @@ export function ModernNavigationMenu() {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        <NavigationMenuItem className="hidden md:block">
+        {/* ---------------New In-------------------------------------- */}
+
+        {/* <NavigationMenuItem className="hidden md:block">
           <NavigationMenuTrigger className="text-lg">
-            Simple
+            New In
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[200px] gap-4">
@@ -172,11 +152,18 @@ export function ModernNavigationMenu() {
               </li>
             </ul>
           </NavigationMenuContent>
+        </NavigationMenuItem> */}
+        <NavigationMenuItem>
+          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+            <Link href="/docs">New In</Link>
+          </NavigationMenuLink>
         </NavigationMenuItem>
+
+        {/* ------------------categories------------------------------------- */}
 
         <NavigationMenuItem className="hidden md:block">
           <NavigationMenuTrigger className="text-lg">
-            With Icon
+            Categories
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[200px] gap-4">
@@ -203,10 +190,84 @@ export function ModernNavigationMenu() {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
+
+        {/* -----------------nav searching---------------------- */}
+
+        <NavigationMenuItem>
+          <div className="flex items-center space-x-2  p-1.5  bg-transparent border border-input  rounded-full focus-within:ring-2 focus-within:ring-ring transition-all duration-200">
+            <Input
+              placeholder="Search..."
+              className="w-48 md:w-64  border-none rounded-full bg-transparent focus-visible:ring-0 focus-visible:outline-none text-sm"
+            />
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label="Search"
+              className="hover:bg-muted"
+            >
+              <Search className="w-4 h-4" />
+            </Button>
+          </div>
+        </NavigationMenuItem>
+
+        {/* -----------profile---------------------- */}
+
+        <Link href="/prifile">
+          <UserMenu />
+        </Link>
+
+        {/* -----------suporter--------------------- */}
+
+        <NavigationMenuItem className="flex items-center">
+          <Link
+            href="/support"
+            className=" items-center gap-2 px-3 py-2  font-medium text-foreground  text-lg  transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex  rounded-sm p-2  outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4"
+          >
+            <HelpCircle className="w-4 h-4" />
+            <span>Support</span>
+          </Link>
+        </NavigationMenuItem>
       </NavigationMenuList>
+
+      {/* -----------language----------------------- */}
+      <NavigationMenuItem className="hidden md:block">
+        <NavigationMenuTrigger className="text-lg">
+          Language
+        </NavigationMenuTrigger>
+        <NavigationMenuContent>
+          <ul className="grid w-[200px] gap-4">
+            <li>
+              <NavigationMenuLink asChild>
+                <Link href="#" className="flex-row items-center gap-2">
+                  <CircleHelpIcon />
+                  Khmer
+                </Link>
+              </NavigationMenuLink>
+              <NavigationMenuLink asChild>
+                <Link href="#" className="flex-row items-center gap-2">
+                  <CircleIcon />
+                  English
+                </Link>
+              </NavigationMenuLink>
+            </li>
+          </ul>
+        </NavigationMenuContent>
+      </NavigationMenuItem>
+
+      {/* --------------chart------------------------ */}
+
+      <NavigationMenuItem className="flex items-center">
+        <Link
+          href="/chart"
+          className=" items-center gap-2 px-3 py-2  text-foreground text-lg   transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex  rounded-sm p-2  outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4"
+        >
+          <ShoppingBag />
+        </Link>
+      </NavigationMenuItem>
     </NavigationMenu>
   );
 }
+
 function ListItem({
   title,
   children,

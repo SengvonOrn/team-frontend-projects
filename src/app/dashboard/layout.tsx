@@ -8,7 +8,7 @@ export default function DashboardLayout({
   return (
     <div>
       <div className="fixed top-0 left-0 right-0 z-50 bg-background border-b">
-        <SiteHeader />
+        {/* <SiteHeader /> */}
       </div>
       <main className="pt-[calc(var(--header-height)+2rem)] px-5 lg:px-28">
         {children}

@@ -20,7 +20,8 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      <div className="flex flex-1 flex-col cursor-pointer">
+
+      {/* <div className="flex flex-1 flex-col cursor-pointer">
         <div className="flex flex-1 flex-col gap-2">
           <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
             <h3 className="text-7xl px-8">Hello guy</h3>
@@ -35,7 +36,7 @@ export default function HomePage() {
             <SectionCards />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
