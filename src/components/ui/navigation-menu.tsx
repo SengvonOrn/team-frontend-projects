@@ -18,7 +18,7 @@ function NavigationMenu({
       data-slot="navigation-menu"
       data-viewport={viewport}
       className={cn(
-        "group/navigation-menu relative   flex max-w-max flex-1 items-center justify-center",
+        "group/navigation-menu relative  flex max-w-max flex-1 items-center justify-center",
         className
       )}
       {...props}
@@ -45,6 +45,8 @@ function NavigationMenuList({
   );
 }
 
+//----------------------------------->
+
 // Navigate top wrap one by one
 
 function NavigationMenuItem({
@@ -59,9 +61,21 @@ function NavigationMenuItem({
     />
   );
 }
+// bg-[#4B0A04]  |=|  bg-[#4B0A04] | focus:text-accent-foreground | data-[state=open]:hover:bg-accent data-[state=open]:text-accent-foreground
+// focus:bg-accent → when the trigger element is focused (clicked or tabbed), it changes to accent background color.
+//  data-[state=open]:focus:bg-accent data-[state=open]:bg-accent/50  |=> when the dropdown menu is open, the background becomes accent with 50% opacity.
 const navigationMenuTriggerStyle = cva(
-  "group inline-flex h-9 w-max items-center justify-center rounded-md bg-[#4B0A04] cursor-pointer  px-4 py-2 text-lg font-medium   focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[state=open]:hover:bg-accent data-[state=open]:text-accent-foreground data-[state=open]:focus:bg-accent data-[state=open]:bg-accent/50 focus-visible:ring-ring/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1"
+  "group inline-flex h-9 w-max items-center justify-center rounded-md bg-[#e9441b] text-white " +
+    "hover:bg-[#f75b3a] hover:text-black " + // 🔹 Hover effect (lighter red + black text)
+    "focus:bg-accent focus:text-black " + // 🔹 Keep text black when focused
+    "data-[state=open]:bg-accent/50 data-[state=open]:text-black " + // 🔹 When dropdown is open
+    "cursor-pointer px-4 py-2 text-lg font-medium " +
+    "disabled:pointer-events-none disabled:opacity-50 " +
+    "focus-visible:ring-ring/50 outline-none transition-[background-color,color,box-shadow] " +
+    "focus-visible:ring-[3px] focus-visible:outline-1"
 );
+
+//-----------------------------------------
 
 function NavigationMenuTrigger({
   className,
@@ -76,7 +90,7 @@ function NavigationMenuTrigger({
     >
       {children}{" "}
       <ChevronDownIcon
-        className="relative top-[1px] ml-1 size-3 transition duration-300 group-data-[state=open]:rotate-180"
+        className="relative top-[1px] ml-1 size-3  transition duration-300 group-data-[state=open]:rotate-180"
         aria-hidden="true"
       />
     </NavigationMenuPrimitive.Trigger>
@@ -93,14 +107,23 @@ function NavigationMenuContent({
     <NavigationMenuPrimitive.Content
       data-slot="navigation-menu-content"
       className={cn(
-        "data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 top-0 left-0 w-full p-2 pr-2.5 md:absolute md:w-auto",
-        "group-data-[viewport=false]/navigation-menu:bg-popover group-data-[viewport=false]/navigation-menu:text-popover-foreground group-data-[viewport=false]/navigation-menu:data-[state=open]:animate-in group-data-[viewport=false]/navigation-menu:data-[state=closed]:animate-out group-data-[viewport=false]/navigation-menu:data-[state=closed]:zoom-out-95 group-data-[viewport=false]/navigation-menu:data-[state=open]:zoom-in-95 group-data-[viewport=false]/navigation-menu:data-[state=open]:fade-in-0 group-data-[viewport=false]/navigation-menu:data-[state=closed]:fade-out-0 group-data-[viewport=false]/navigation-menu:top-full group-data-[viewport=false]/navigation-menu:mt-1.5 group-data-[viewport=false]/navigation-menu:overflow-hidden group-data-[viewport=false]/navigation-menu:rounded-md group-data-[viewport=false]/navigation-menu:border group-data-[viewport=false]/navigation-menu:shadow group-data-[viewport=false]/navigation-menu:duration-200 **:data-[slot=navigation-menu-link]:focus:ring-0 **:data-[slot=navigation-menu-link]:focus:outline-none",
+        "data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out " +
+          "data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 " +
+          "data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 " +
+          "top-0 left-0 w-full p-2 pr-2.5 md:absolute md:w-auto " +
+          "group-data-[viewport=false]/navigation-menu:bg-popover group-data-[viewport=false]/navigation-menu:text-popover-foreground " +
+          "group-data-[viewport=false]/navigation-menu:top-full group-data-[viewport=false]/navigation-menu:mt-1.5 " +
+          "group-data-[viewport=false]/navigation-menu:overflow-hidden group-data-[viewport=false]/navigation-menu:rounded-md " +
+          "group-data-[viewport=false]/navigation-menu:border group-data-[viewport=false]/navigation-menu:shadow " +
+          "hover:bg-popover/95 transition-colors", // 🔹 Added hover transition
         className
       )}
       {...props}
     />
   );
 }
+
+//----------------------------------------------------->
 
 function NavigationMenuViewport({
   className,
@@ -112,10 +135,11 @@ function NavigationMenuViewport({
         "absolute top-full left-0 isolate z-50 flex justify-center"
       )}
     >
+      {/*  bg-popover */}
       <NavigationMenuPrimitive.Viewport
         data-slot="navigation-menu-viewport"
         className={cn(
-          "origin-top-center bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border shadow md:w-[var(--radix-navigation-menu-viewport-width)]",
+          "origin-top-center text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border shadow md:w-[var(--radix-navigation-menu-viewport-width)]",
           className
         )}
         {...props}
@@ -124,7 +148,7 @@ function NavigationMenuViewport({
   );
 }
 
-//------------------------------------------>
+//-----------NavLink------------------------------->
 
 function NavigationMenuLink({
   className,

@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { SiteHeader } from "@/components/site-header";
-
+import { TopNavbar } from "@/components/ui/TopNavbar";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -30,30 +30,20 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* ThemProder is parent that set Dark Mode color to all child so we need to add wrapper all child */}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          {/*  Wrap everything in SidebarProvider */}
-          <SidebarProvider
-            style={
-              {
-                "--sidebar-width": "calc(var(--spacing) * 72)",
-                "--header-height": "calc(var(--spacing) * 12)",
-              } as React.CSSProperties
-            }
-          >
-            <SidebarInset>
-              {/* Navbar now inside provider  provider is main content so we should add all child that wait get event inside it */}
-              <div className="fixed top-0 left-0 right-0 z-50 bg-background border-b">
+          <SidebarProvider>
+            <SidebarInset className="relative">
+              <div className="fixed top-0 left-0 right-0 z-50">
+                {/* <TopNavbar /> */}
                 <SiteHeader />
               </div>
-
-              <main className="pt-[calc(var(--header-height)+2rem)] px-5 lg:px-28">
-                {children}
+              <main className="pt-[120px]">
+                {children} ✅ now scroll is tracked
               </main>
             </SidebarInset>
           </SidebarProvider>

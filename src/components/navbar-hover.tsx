@@ -2,288 +2,291 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
-  ChartArea,
-  ChartBar,
-  CircleCheckIcon,
-  CircleHelpIcon,
-  CircleIcon,
-  HelpCircle,
-  HelpCircleIcon,
+  ChevronDown,
+  Images,
   Search,
-  SearchIcon,
-  SendToBackIcon,
   ShoppingBag,
-  StarIcon,
+  Heart,
+  BarChart2,
+  Globe,
+  X, // For clearing the image search
 } from "lucide-react";
 
-import { useIsMobile } from "@/hooks/use-mobile";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { components } from "../constants/data";
-import { UserMenu } from "./button-auth";
+import { Separator } from "./ui/separator";
 
-export function ModernNavigationMenu() {
-  const isMobile = useIsMobile();
+// --- Categories for your Dropdown ---
+const allCategories = [
+  { name: "Electronics", href: "/electronics", icon: "⚡️" },
+  { name: "Books", href: "/books", icon: "📚" },
+  { name: "Clothing", href: "/clothing", icon: "👕" },
+  { name: "Home Goods", href: "/home", icon: "🏠" },
+  { name: "Sports", href: "/sports", icon: "⚽️" },
+];
+
+export function Header() {
+  const [search, setSearch] = React.useState("");
+  const [imagePreviewUrl, setImagePreviewUrl] = React.useState<string | null>(
+    null
+  );
+  const imageInputRef = React.useRef<HTMLInputElement>(null);
+
+  const filteredCategories = allCategories.filter((cat) =>
+    cat.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const handleImageSearchClick = () => {
+    imageInputRef.current?.click();
+  };
+
+  const handleImageFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // If there was a previous image, revoke its URL to free memory
+      if (imagePreviewUrl) {
+        URL.revokeObjectURL(imagePreviewUrl);
+      }
+      const url = URL.createObjectURL(file);
+      setImagePreviewUrl(url);
+
+      // Clear the input value so the same file can be selected again
+      if (imageInputRef.current) {
+        imageInputRef.current.value = "";
+      }
+    }
+  };
+
+  const clearImageSearch = () => {
+    if (imagePreviewUrl) {
+      URL.revokeObjectURL(imagePreviewUrl);
+    }
+    setImagePreviewUrl(null);
+  };
+
+  // Calculate left padding for the Input based on whether an image is present
+  const inputLeftPadding = imagePreviewUrl ? "pl-20" : "pl-4";
+
+  // Calculate right padding for the Input to account for the Image Search Button
+  const inputRightPadding = imagePreviewUrl ? "pr-2" : "pr-4";
 
   return (
-    <NavigationMenu viewport={isMobile}>
-      <NavigationMenuList className="flex-wrap">
-        {/* --------------------------Best Seller ---------------------------- */}
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className="text-lg">
-            Best Seller
-          </NavigationMenuTrigger>
+    <header className="flex items-center justify-between w-full gap-6 p-4 ">
+      {/* 1. LEFT: Logo */}
+      <div className="flex-shrink-0">
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/logo-camben.png" // <-- REPLACE with your actual logo path
+            alt="Camben Logo"
+            width={40}
+            height={40}
+            className="h-10 w-10"
+          />
+          <div className="flex flex-col">
+            <span className="text-xl font-bold text-black">Camben</span>
+            <span className="text-xs text-gray-500">Open on The World</span>
+          </div>
+        </Link>
+      </div>
 
-          <NavigationMenuContent>
-            <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <a
-                    className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-4 no-underline outline-hidden transition-all duration-200 select-none focus:shadow-md md:p-6"
-                    href="/"
-                  >
-                    <div className="mb-2 text-lg font-medium sm:mt-4">
-                      shadcn/ui
-                    </div>
-                    <p className="text-muted-foreground text-sm leading-tight">
-                      Beautifully designed components built with Tailwind CSS.
-                    </p>
-                  </a>
-                </NavigationMenuLink>
-              </li>
-              <ListItem href="/docs" title="Introduction">
-                Re-usable components built using Radix UI and Tailwind CSS.
-              </ListItem>
-              <ListItem href="/docs/installation" title="Installation">
-                How to install dependencies and structure your app.
-              </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                Styles for headings, paragraphs, lists...etc
-              </ListItem>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-
-        {/* -----------------------------5 Star ------------------------------ */}
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className="text-lg">
-            <StarIcon className="mr-2" /> 5 Start Rate
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-2 sm:w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-       {/* ---------------------Early Black Friday---------------- */}
-        <NavigationMenuItem className="hidden md:block">
-          <NavigationMenuTrigger className="text-lg">
-            <SendToBackIcon className="mr-2" />
-            Early Black Friday
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[300px] gap-4">
-              <li>
-                <NavigationMenuLink asChild>
-                  <Link href="#">
-                    <div className="font-medium text-lg">5 Start rate</div>
-                    <div className="text-muted-foreground">
-                      Browse all components in the library.
-                    </div>
-                  </Link>
-                </NavigationMenuLink>
-                <NavigationMenuLink asChild>
-                  <Link href="#">
-                    <div className="font-medium text-lg">Documentation</div>
-                    <div className="text-muted-foreground">
-                      Learn how to use the library.
-                    </div>
-                  </Link>
-                </NavigationMenuLink>
-                <NavigationMenuLink asChild>
-                  <Link href="#">
-                    <div className="font-medium text-lg">Blog</div>
-                    <div className="text-muted-foreground">
-                      Read our latest blog posts.
-                    </div>
-                  </Link>
-                </NavigationMenuLink>
-              </li>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-
-        {/* ---------------New In-------------------------------------- */}
-
-        {/* <NavigationMenuItem className="hidden md:block">
-          <NavigationMenuTrigger className="text-lg">
-            New In
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[200px] gap-4">
-              <li>
-                <NavigationMenuLink asChild>
-                  <Link href="#">Components</Link>
-                </NavigationMenuLink>
-                <NavigationMenuLink asChild>
-                  <Link href="#">Documentation</Link>
-                </NavigationMenuLink>
-                <NavigationMenuLink asChild>
-                  <Link href="#">Blocks</Link>
-                </NavigationMenuLink>
-              </li>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem> */}
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/docs">New In</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-
-        {/* ------------------categories------------------------------------- */}
-
-        <NavigationMenuItem className="hidden md:block">
-          <NavigationMenuTrigger className="text-lg">
-            Categories
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[200px] gap-4">
-              <li>
-                <NavigationMenuLink asChild>
-                  <Link href="#" className="flex-row items-center gap-2">
-                    <CircleHelpIcon />
-                    Backlog
-                  </Link>
-                </NavigationMenuLink>
-                <NavigationMenuLink asChild>
-                  <Link href="#" className="flex-row items-center gap-2">
-                    <CircleIcon />
-                    To Do
-                  </Link>
-                </NavigationMenuLink>
-                <NavigationMenuLink asChild>
-                  <Link href="#" className="flex-row items-center gap-2">
-                    <CircleCheckIcon />
-                    Done
-                  </Link>
-                </NavigationMenuLink>
-              </li>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-
-        {/* -----------------nav searching---------------------- */}
-
-        <NavigationMenuItem>
-          <div className="flex items-center space-x-2  p-1.5  bg-transparent border border-input  rounded-full focus-within:ring-2 focus-within:ring-ring transition-all duration-200">
-            <Input
-              placeholder="Search..."
-              className="w-48 md:w-64  border-none rounded-full bg-transparent focus-visible:ring-0 focus-visible:outline-none text-sm"
-            />
+      {/* 2. CENTER: Main Search Bar */}
+      <div className="flex items-center w-full max-w-2xl border border-input rounded-full focus-within:ring-2 focus-within:ring-ring transition-all duration-200 p-1">
+        {/* Categories Dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
-              size="icon"
-              aria-label="Search"
-              className="hover:bg-muted"
+              className="rounded-full space-x-1 flex-shrink-0"
             >
-              <Search className="w-4 h-4" />
+              <span>All Categories</span>
+              <ChevronDown className="w-4 h-4 opacity-50" />
             </Button>
-          </div>
-        </NavigationMenuItem>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-64 p-2">
+            <div className="flex flex-col gap-2">
+              <Input
+                placeholder="Search categories..."
+                className="rounded-full"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <ul className="grid gap-1 mt-2 max-h-60 overflow-y-auto">
+                {filteredCategories.length > 0 ? (
+                  filteredCategories.map((cat) => (
+                    <li key={cat.name}>
+                      <Link
+                        href={cat.href}
+                        className="flex items-center gap-2 px-2 py-1.5 rounded text-sm hover:bg-muted"
+                      >
+                        {cat.icon}
+                        {cat.name}
+                      </Link>
+                    </li>
+                  ))
+                ) : (
+                  <li className="text-sm text-muted-foreground px-2 py-1.5">
+                    No results found.
+                  </li>
+                )}
+              </ul>
+            </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-        {/* -----------profile---------------------- */}
+        <Separator orientation="vertical" className="h-6" />
 
-        <Link href="/prifile">
-          <UserMenu />
-        </Link>
+        {/* --- Combined Text Input and Image Preview (Updated) --- */}
+        <div className="flex flex-1 items-center relative">
+          {imagePreviewUrl && (
+            // Image preview on the left, absolutely positioned
+            <div className="absolute left-2 flex items-center gap-1 z-10">
+              {" "}
+              {/* Added z-10 */}
+              <div className="relative h-7 w-7 rounded-md overflow-hidden border border-gray-200 bg-gray-50">
+                <Image
+                  src={imagePreviewUrl}
+                  alt="Selected search image preview"
+                  layout="fill"
+                  objectFit="cover"
+                />
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6 text-muted-foreground hover:text-foreground p-0"
+                onClick={clearImageSearch}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+          )}
 
-        {/* -----------suporter--------------------- */}
+          <Input
+            type="text"
+            placeholder="What are you looking for?"
+            className={`
+                      flex-1
+                      !bg-transparent
+                      !border-none
+                      !ring-0
+                      !outline-none
+                      !shadow-none
+                      focus:!ring-0
+                      focus:!outline-none
+                      focus:!shadow-none
+                      text-base
+                      ${inputLeftPadding} ${inputRightPadding}
+                    `}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+        {/* --- End Combined Text Input and Image Preview --- */}
 
-        <NavigationMenuItem className="flex items-center">
-          <Link
-            href="/support"
-            className=" items-center gap-2 px-3 py-2  font-medium text-foreground  text-lg  transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex  rounded-sm p-2  outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4"
-          >
-            <HelpCircle className="w-4 h-4" />
-            <span>Support</span>
-          </Link>
-        </NavigationMenuItem>
-      </NavigationMenuList>
+        {/* Hidden File Input for Image Search */}
+        <input
+          type="file"
+          accept="image/*"
+          ref={imageInputRef}
+          onChange={handleImageFileChange}
+          style={{ display: "none" }}
+        />
 
-      {/* -----------language----------------------- */}
-      <NavigationMenuItem className="hidden md:block">
-        <NavigationMenuTrigger className="text-lg">
-          Language
-        </NavigationMenuTrigger>
-        <NavigationMenuContent>
-          <ul className="grid w-[200px] gap-4">
-            <li>
-              <NavigationMenuLink asChild>
-                <Link href="#" className="flex-row items-center gap-2">
-                  <CircleHelpIcon />
-                  Khmer
-                </Link>
-              </NavigationMenuLink>
-              <NavigationMenuLink asChild>
-                <Link href="#" className="flex-row items-center gap-2">
-                  <CircleIcon />
-                  English
-                </Link>
-              </NavigationMenuLink>
-            </li>
-          </ul>
-        </NavigationMenuContent>
-      </NavigationMenuItem>
-
-      {/* --------------chart------------------------ */}
-
-      <NavigationMenuItem className="flex items-center">
-        <Link
-          href="/chart"
-          className=" items-center gap-2 px-3 py-2  text-foreground text-lg   transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex  rounded-sm p-2  outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4"
+        {/* Image Search Button (triggers hidden file input) */}
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="Search by image"
+          className="rounded-full"
+          onClick={handleImageSearchClick}
         >
-          <ShoppingBag />
-        </Link>
-      </NavigationMenuItem>
-    </NavigationMenu>
-  );
-}
+          <Images className="w-5 h-5" />
+        </Button>
 
-function ListItem({
-  title,
-  children,
-  href,
-  ...props
-}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
-  return (
-    <li {...props}>
-      <NavigationMenuLink asChild>
-        <Link href={href}>
-          <div className="text-sm leading-none font-medium">{title}</div>
-          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-            {children}
-          </p>
-        </Link>
-      </NavigationMenuLink>
-    </li>
+        {/* Main Search Button */}
+        <Button
+          type="submit"
+          size="icon"
+          className="rounded-full bg-orange-600 text-white hover:bg-orange-700"
+        >
+          <Search className="w-5 h-5" />
+        </Button>
+      </div>
+
+      {/* 3. RIGHT: Icons & Account (remains the same) */}
+      <div className="flex items-center gap-2">
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="Compare"
+          className="hidden lg:inline-flex"
+        >
+          <BarChart2 className="w-6 h-6" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="Wishlist"
+          className="hidden lg:inline-flex"
+        >
+          <Heart className="w-6 h-6" />
+        </Button>
+        <Button variant="ghost" size="icon" aria-label="Cart" asChild>
+          <Link href="/cart">
+            <ShoppingBag className="w-6 h-6" />
+          </Link>
+        </Button>
+
+        <Separator
+          orientation="vertical"
+          className="h-6 mx-2 hidden md:block"
+        />
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              className="rounded-md space-x-1 hidden md:flex"
+            >
+              <Globe className="w-5 h-5" />
+              <span>English</span>
+              <ChevronDown className="w-4 h-4 opacity-50" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-40 p-2">
+            <Link
+              href="#"
+              className="flex items-center gap-2 px-2 py-1.5 rounded text-sm hover:bg-muted"
+            >
+              🇰🇭 Khmer
+            </Link>
+            <Link
+              href="#"
+              className="flex items-center gap-2 px-2 py-1.5 rounded text-sm hover:bg-muted"
+            >
+              🇬🇧 English
+            </Link>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <Button variant="ghost" asChild className="text-left h-auto p-2">
+          <Link href="/account">
+            <div className="flex flex-col">
+              <span className="text-xs font-medium">Sign in / Register</span>
+              <span className="text-sm font-bold">Orders & Account</span>
+            </div>
+          </Link>
+        </Button>
+      </div>
+    </header>
   );
 }

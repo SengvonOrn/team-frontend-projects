@@ -143,3 +143,7 @@
     scrollbar-color: #888 #f0f0f0;
   }
 }
+
+.custom-background {
+  --bg-btn-search: #e9441b;
+}
