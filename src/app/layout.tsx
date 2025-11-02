@@ -38,13 +38,11 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <SidebarInset className="relative">
-              <div className="fixed top-0 left-0 right-0 z-50">
+              <div className="fixed top-0 left-0 right-0 z-50 bg-red-500">
                 {/* <TopNavbar /> */}
                 <SiteHeader />
               </div>
-              <main className="pt-[120px]">
-                {children} ✅ now scroll is tracked
-              </main>
+              <main className="pt-[120px]">{children}</main>
             </SidebarInset>
           </SidebarProvider>
         </ThemeProvider>
