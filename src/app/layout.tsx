@@ -42,7 +42,7 @@ export default function RootLayout({
                 {/* <TopNavbar /> */}
                 <SiteHeader />
               </div>
-              <main className="pt-[120px]">{children}</main>
+              <main className="pt-[120px] px-4 lg:px-20">{children}</main>
             </SidebarInset>
           </SidebarProvider>
         </ThemeProvider>

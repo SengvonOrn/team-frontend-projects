@@ -41,3 +41,28 @@ export const components: Component[] = [
       "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
   },
 ];
+
+import Shoe from "../../public/slider/Shoe.jpg";
+import Three from "../../public/slider/Three.jpg";
+import Two from "../../public/slider/Two.jpg";
+
+export const slides2 = [
+  {
+    title: "Black",
+    subtitle: "FRIDAY",
+    discount: "50% off",
+    images: Shoe,
+  },
+  {
+    title: "Cyber",
+    subtitle: "MONDAY",
+    discount: "70% off",
+    images: Three,
+  },
+  {
+    title: "Holiday",
+    subtitle: "SALE",
+    discount: "40% off",
+    images: Two,
+  },
+];

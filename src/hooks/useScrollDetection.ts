@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef, useState } from "react";
 
 export function useScrollDetection(threshold = 60, blurThreshold = 100) {
