@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { SiteHeader } from "@/components/site-header";
-import { TopNavbar } from "@/components/ui/TopNavbar";
+import { SearchProvider } from "@/context/SearchContext";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -38,11 +38,12 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <SidebarInset className="relative">
-              <div className="fixed top-0 left-0 right-0 z-50 bg-red-500">
-                {/* <TopNavbar /> */}
-                <SiteHeader />
-              </div>
-              <main className="pt-[120px] px-4 lg:px-20">{children}</main>
+              <SearchProvider>
+                <div className="fixed top-0 left-0 right-0 z-50 bg-red-500">
+                  <SiteHeader />
+                </div>
+                <main className="pt-[120px] px-4 lg:px-20">{children}</main>
+              </SearchProvider>
             </SidebarInset>
           </SidebarProvider>
         </ThemeProvider>

@@ -10,6 +10,7 @@ import { useScrollDetection } from "@/hooks/useScrollDetection";
 
 export function SiteHeader() {
   const { hideTop, blurHeader } = useScrollDetection(60, 100);
+
   return (
     <>
       {/* Top Navbar */}
@@ -24,22 +25,23 @@ export function SiteHeader() {
       {/* Main Navbar */}
       <header
         className={`fixed left-0 right-0 z-40 flex h-25 items-center border-b transition-transform duration-500 ${
-          hideTop
-            ? "translate-y-0"
-            : "translate-y-[40px]" /* height of TopNavbar */
+          hideTop ? "translate-y-0" : "translate-y-[40px]"
         } ${
           blurHeader
             ? "backdrop-blur-lg bg-background/70 shadow-sm"
             : "bg-background"
         }`}
       >
-        <div className="flex w-full items-center   justify-center px-6">
+        <div className="flex w-full items-center justify-center px-6">
           <div className="flex items-center gap-3">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mx-2 h-4" />
             <Header />
+
             <div className="flex items-center gap-x-3">
               <Separator orientation="vertical" className="mx-2 h-4" />
+
+              {/* Mode Toggle */}
               <Button
                 variant="ghost"
                 asChild

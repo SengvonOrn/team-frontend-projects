@@ -22,6 +22,8 @@ import {
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
+import { HeaderSearchInput } from "./buttonSearch/header-search-input";
+import AuthDialog from "./AuthDialog";
 
 // --- Categories for your Dropdown ---
 const allCategories = [
@@ -170,7 +172,7 @@ export function Header() {
             </div>
           )}
 
-          <Input
+          {/* <Input
             type="text"
             placeholder="What are you looking for?"
             className={`
@@ -188,6 +190,20 @@ export function Header() {
                     `}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+          /> */}
+
+          <HeaderSearchInput
+            className={`   flex-1
+                      !bg-transparent
+                      !border-none
+                      !ring-0
+                      !outline-none
+                      !shadow-none
+                      focus:!ring-0
+                      focus:!outline-none
+                      focus:!shadow-none
+                      text-base
+                      ${inputLeftPadding} ${inputRightPadding}`}
           />
         </div>
         {/* --- End Combined Text Input and Image Preview --- */}
@@ -278,14 +294,8 @@ export function Header() {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <Button variant="ghost" asChild className="text-left h-auto p-2">
-          <Link href="/account">
-            <div className="flex flex-col">
-              <span className="text-xs font-medium">Sign in / Register</span>
-              <span className="text-sm font-bold">Orders & Account</span>
-            </div>
-          </Link>
-        </Button>
+        {/* Sign In / Sign Up Dialog */}
+        <AuthDialog />
       </div>
     </header>
   );

@@ -1,18 +1,39 @@
-import { SiteHeader } from "@/components/site-header";
+"use client";
+import React from "react";
 
-export default function DashboardLayout({
-  children,
-}: {
+interface DashboardLayoutProps {
   children: React.ReactNode;
-}) {
+}
+
+export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <div>
-      <div className="fixed top-0 left-0 right-0 z-50 bg-background border-b">
-        {/* <SiteHeader /> */}
+    <div className="min-h-screen flex flex-col">
+      <div className="flex flex-1 pt-16">
+        {/* Sidebar */}
+        <aside className="hidden lg:block w-64 bg-gray-100 border-r p-4">
+          {/* Sidebar content, links, etc */}
+          <nav className="flex flex-col gap-2">
+            <a href="/dashboard" className="p-2 rounded hover:bg-gray-200">
+              Dashboard
+            </a>
+            <a
+              href="/dashboard/users"
+              className="p-2 rounded hover:bg-gray-200"
+            >
+              Users
+            </a>
+            <a
+              href="/dashboard/settings"
+              className="p-2 rounded hover:bg-gray-200"
+            >
+              Settings
+            </a>
+          </nav>
+        </aside>
+
+        {/* Main content */}
+        <main className="flex-1 p-5 lg:p-8">{children}</main>
       </div>
-      <main className="pt-[calc(var(--header-height)+2rem)] px-5 lg:px-28">
-        {children}
-      </main>
     </div>
   );
 }

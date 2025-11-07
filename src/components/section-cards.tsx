@@ -30,13 +30,11 @@ export function SectionCards() {
     startAutoplay,
     stopAutoplay,
   } = useAutoplayCarousel(3000, false);
-
   //
   const handleMouseEnterstop = () => stopAutoplay();
   const handleMouseLeavestart = () => startAutoplay();
 
   //
-
   return (
     <div className="grid md:grid-cols-3 gap-6  py-10">
       {/* === RIGHT FADE CAROUSEL === */}
