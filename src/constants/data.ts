@@ -5,15 +5,20 @@ export interface Component {
 }
 
 // Define the Deal and Props interfaces
-interface Deal {
+// types.ts
+export interface Deal {
+  id: number;
   name: string;
-  price: string;
+  price: number;
   image: string;
   description: string;
   rating: number;
+  category: string; // added category
 }
 
-export const topDealsData: deals[] = [
+// data/topDealsData.ts
+
+export const topDealsData: Deal[] = [
   {
     id: 1,
     name: "Smart Watch",
@@ -21,287 +26,60 @@ export const topDealsData: deals[] = [
     image: "/images/watch.png",
     description: "Track your fitness and notifications.",
     rating: 4.5,
+    category: "Electronics",
   },
   {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
+    id: 2,
+    name: "Wireless Headphones",
+    price: 80,
+    image: "/images/headphones.png",
+    description: "High quality sound and comfort.",
+    rating: 4.2,
+    category: "Electronics",
   },
   {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
+    id: 3,
+    name: "Running Shoes",
+    price: 95,
+    image: "/images/shoes.png",
+    description: "Lightweight shoes for daily running.",
+    rating: 4.7,
+    category: "Sports",
   },
   {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
+    id: 4,
+    name: "Yoga Mat",
+    price: 25,
+    image: "/images/yoga-mat.png",
+    description: "Comfortable and non-slip mat.",
+    rating: 4.3,
+    category: "Fitness",
   },
   {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
+    id: 5,
+    name: "Bluetooth Speaker",
+    price: 60,
+    image: "/images/speaker.png",
+    description: "Portable speaker with deep bass.",
+    rating: 4.6,
+    category: "Electronics",
   },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "Smart Watch",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "vanada",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "g-devid",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: "sengvon",
-    price: 120,
-    image: "/images/watch.png",
-    description: "Track your fitness and notifications.",
-    rating: 4.5,
-  },
-  // Add more items...
 ];
 
-export const components: Component[] = [
-  {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
-  },
-  {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-  {
-    title: "Progress",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  },
-  {
-    title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
-  },
-  {
-    title: "Tabs",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-  },
-];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 import { deals } from "@/types/deals";
 import Shoe from "../../public/slider/Shoe.jpg";

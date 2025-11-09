@@ -1,3 +1,0 @@
-this folder for config share all data such as:
-- Authenication
-- api from database

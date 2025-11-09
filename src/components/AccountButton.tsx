@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import FullPageModal from "@/components/AuthDialog";
+import FullPageModal from "@/components/auth/AuthDialog";
 
 export default function AccountButton() {
   const [isModalOpen, setModalOpen] = useState(false);

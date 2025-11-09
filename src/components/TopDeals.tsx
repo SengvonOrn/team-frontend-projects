@@ -4,10 +4,13 @@ import React from "react";
 import { usePaginatedDeals } from "@/hooks/usePaginatedDeals";
 import { Button } from "@/components/ui/button";
 import { TopDealProps } from "@/types/deals";
+import { useCart } from "@/context/cart/CartContext";
 
 export function TopDeal({ topDeals }: TopDealProps) {
   const { page, setPage, visibleDeals, getPages, totalPages, renderStars } =
     usePaginatedDeals(topDeals, 5, 6);
+
+  const { addToCart } = useCart(); // ✅ correct hook
 
   return (
     <div className="flex flex-col gap-6">
@@ -25,7 +28,7 @@ export function TopDeal({ topDeals }: TopDealProps) {
           {visibleDeals.map((deal) => (
             <div
               key={deal.id}
-              className="border rounded-lg p-3 hover:shadow-xl hover:scale-105 transition-all duration-300 bg-white"
+              className="border rounded-lg p-3 hover:shadow-xl hover:scale-105 transition-all duration-300 bg-white cursor-pointer"
             >
               {deal.image && (
                 <img
@@ -34,20 +37,38 @@ export function TopDeal({ topDeals }: TopDealProps) {
                   className="w-full h-40 object-cover rounded-md mb-3"
                 />
               )}
+
               <h3 className="text-sm font-semibold">{deal.name}</h3>
               <p className="text-xs text-gray-500 line-clamp-2">
                 {deal.description}
               </p>
+
               {deal.rating && (
                 <p className="text-yellow-500 text-xs mt-1">
                   {renderStars(deal.rating)}
                 </p>
               )}
+
               {deal.price && (
                 <p className="text-sm font-bold text-green-600 mt-2">
                   ${deal.price.toFixed(2)}
                 </p>
               )}
+
+              {/* ✅ Correct Add to Cart Button */}
+              <Button
+                className="mt-2 w-full"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addToCart({
+                    id: deal.id,
+                    name: deal.name,
+                    price: deal.price || 0,
+                  });
+                }}
+              >
+                Add to Cart
+              </Button>
             </div>
           ))}
         </div>

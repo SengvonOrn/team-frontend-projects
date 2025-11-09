@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { SiteHeader } from "@/components/site-header";
 import { SearchProvider } from "@/context/SearchContext";
+import { LayoutWrapper } from "@/components/layout/LayoutWrapper";
+import { Providers } from "@/components/Providers";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -36,7 +38,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SidebarProvider>
+          {/* ---------------------by own--------------------------- */}
+          {/* <SidebarProvider>
             <SidebarInset className="relative">
               <SearchProvider>
                 <div className="fixed top-0 left-0 right-0 z-50 bg-red-500">
@@ -45,7 +48,22 @@ export default function RootLayout({
                 <main className="pt-[120px] px-4 lg:px-20">{children}</main>
               </SearchProvider>
             </SidebarInset>
-          </SidebarProvider>
+          </SidebarProvider> */}
+
+          {/* ------------------------by Layout--------------------------------- */}
+          {/* <SidebarProvider>
+            <SidebarInset className="relative">
+              <SearchProvider>
+                <LayoutWrapper>{children}</LayoutWrapper>
+              </SearchProvider>
+            </SidebarInset>
+          </SidebarProvider> */}
+
+          {/* --------------------------by Provider in components------------------------------- */}
+
+          <Providers>
+            <LayoutWrapper>{children}</LayoutWrapper>
+          </Providers>
         </ThemeProvider>
       </body>
     </html>

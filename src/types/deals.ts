@@ -5,6 +5,7 @@ export interface deals {
   image?: string;
   price?: number;
   rating?: number;
+  category: string;
 }
 
 export interface TopDealProps {

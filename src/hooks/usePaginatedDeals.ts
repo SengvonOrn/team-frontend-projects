@@ -10,26 +10,33 @@ export interface Deal {
   image?: string;
   price?: number;
   rating?: number;
+  category: string;
 }
 
+//---------------------------------------->
 export function usePaginatedDeals(topDeals: Deal[], rows = 5, columns = 6) {
-  const { search } = useSearch();
+  const { search, categories } = useSearch(); // now includes categories
   const [page, setPage] = useState(1);
 
   const itemsPerPage = rows * columns;
 
-  // Filter deals by search term
-  // Filter deals by search term (match from the start)
-  const filteredDeals = topDeals.filter(
-    (deal) =>
+  // Filter deals by search and categories
+  const filteredDeals = topDeals.filter((deal) => {
+    const matchesSearch =
       deal.name.toLowerCase().startsWith(search.toLowerCase()) ||
-      deal.description.toLowerCase().startsWith(search.toLowerCase())
-  );
+      deal.description.toLowerCase().startsWith(search.toLowerCase());
 
-  // Reset page when search changes
+    const matchesCategory =
+      categories === "" ||
+      deal.category.toLowerCase() === categories.toLowerCase();
+
+    return matchesSearch && matchesCategory;
+  });
+
+  // Reset page when search or categories change
   useEffect(() => {
     setPage(1);
-  }, [search]);
+  }, [search, categories]);
 
   // Pagination logic
   const totalPages = Math.ceil(filteredDeals.length / itemsPerPage);
@@ -76,8 +83,10 @@ export function usePaginatedDeals(topDeals: Deal[], rows = 5, columns = 6) {
 
     return stars.join(" ");
   };
+
   return {
     search,
+    categories,
     page,
     setPage,
     totalPages,

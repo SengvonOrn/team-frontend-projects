@@ -3,6 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useCart } from "@/context/cart/CartContext"; // <-- useCart hook
 import {
   ChevronDown,
   Images,
@@ -11,7 +12,7 @@ import {
   Heart,
   BarChart2,
   Globe,
-  X, // For clearing the image search
+  X,
 } from "lucide-react";
 
 import {
@@ -23,9 +24,8 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
 import { HeaderSearchInput } from "./buttonSearch/header-search-input";
-import AuthDialog from "./AuthDialog";
+import AuthDialog from "@/components/common/auth/AuthDialog";
 
-// --- Categories for your Dropdown ---
 const allCategories = [
   { name: "Electronics", href: "/electronics", icon: "⚡️" },
   { name: "Books", href: "/books", icon: "📚" },
@@ -41,53 +41,36 @@ export function Header() {
   );
   const imageInputRef = React.useRef<HTMLInputElement>(null);
 
+  const { cartItems } = useCart(); // <-- get cart items
+
   const filteredCategories = allCategories.filter((cat) =>
     cat.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const handleImageSearchClick = () => {
-    imageInputRef.current?.click();
-  };
-
-  const handleImageFileChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event.target.files?.[0];
+  const handleImageSearchClick = () => imageInputRef.current?.click();
+  const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
-      // If there was a previous image, revoke its URL to free memory
-      if (imagePreviewUrl) {
-        URL.revokeObjectURL(imagePreviewUrl);
-      }
-      const url = URL.createObjectURL(file);
-      setImagePreviewUrl(url);
-
-      // Clear the input value so the same file can be selected again
-      if (imageInputRef.current) {
-        imageInputRef.current.value = "";
-      }
+      if (imagePreviewUrl) URL.revokeObjectURL(imagePreviewUrl);
+      setImagePreviewUrl(URL.createObjectURL(file));
+      if (imageInputRef.current) imageInputRef.current.value = "";
     }
   };
-
   const clearImageSearch = () => {
-    if (imagePreviewUrl) {
-      URL.revokeObjectURL(imagePreviewUrl);
-    }
+    if (imagePreviewUrl) URL.revokeObjectURL(imagePreviewUrl);
     setImagePreviewUrl(null);
   };
 
-  // Calculate left padding for the Input based on whether an image is present
   const inputLeftPadding = imagePreviewUrl ? "pl-20" : "pl-4";
-
-  // Calculate right padding for the Input to account for the Image Search Button
   const inputRightPadding = imagePreviewUrl ? "pr-2" : "pr-4";
 
   return (
-    <header className="flex items-center justify-between w-full gap-6 p-4 ">
-      {/* 1. LEFT: Logo */}
+    <header className="flex items-center justify-between w-full gap-6 p-4">
+      {/* Logo */}
       <div className="flex-shrink-0">
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/logo-camben.png" // <-- REPLACE with your actual logo path
+            src="/logo-camben.png"
             alt="Camben Logo"
             width={40}
             height={40}
@@ -100,9 +83,8 @@ export function Header() {
         </Link>
       </div>
 
-      {/* 2. CENTER: Main Search Bar */}
+      {/* Search Bar */}
       <div className="flex items-center w-full max-w-2xl border border-input rounded-full focus-within:ring-2 focus-within:ring-ring transition-all duration-200 p-1">
-        {/* Categories Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -129,8 +111,7 @@ export function Header() {
                         href={cat.href}
                         className="flex items-center gap-2 px-2 py-1.5 rounded text-sm hover:bg-muted"
                       >
-                        {cat.icon}
-                        {cat.name}
+                        {cat.icon} {cat.name}
                       </Link>
                     </li>
                   ))
@@ -145,20 +126,15 @@ export function Header() {
         </DropdownMenu>
 
         <Separator orientation="vertical" className="h-6" />
-
-        {/* --- Combined Text Input and Image Preview (Updated) --- */}
         <div className="flex flex-1 items-center relative">
           {imagePreviewUrl && (
-            // Image preview on the left, absolutely positioned
             <div className="absolute left-2 flex items-center gap-1 z-10">
-              {" "}
-              {/* Added z-10 */}
               <div className="relative h-7 w-7 rounded-md overflow-hidden border border-gray-200 bg-gray-50">
                 <Image
                   src={imagePreviewUrl}
                   alt="Selected search image preview"
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  style={{ objectFit: "cover" }}
                 />
               </div>
               <Button
@@ -171,44 +147,11 @@ export function Header() {
               </Button>
             </div>
           )}
-
-          {/* <Input
-            type="text"
-            placeholder="What are you looking for?"
-            className={`
-                      flex-1
-                      !bg-transparent
-                      !border-none
-                      !ring-0
-                      !outline-none
-                      !shadow-none
-                      focus:!ring-0
-                      focus:!outline-none
-                      focus:!shadow-none
-                      text-base
-                      ${inputLeftPadding} ${inputRightPadding}
-                    `}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          /> */}
-
           <HeaderSearchInput
-            className={`   flex-1
-                      !bg-transparent
-                      !border-none
-                      !ring-0
-                      !outline-none
-                      !shadow-none
-                      focus:!ring-0
-                      focus:!outline-none
-                      focus:!shadow-none
-                      text-base
-                      ${inputLeftPadding} ${inputRightPadding}`}
+            className={`flex-1 !bg-transparent !border-none !ring-0 !outline-none !shadow-none focus:!ring-0 focus:!outline-none focus:!shadow-none text-base ${inputLeftPadding} ${inputRightPadding}`}
           />
         </div>
-        {/* --- End Combined Text Input and Image Preview --- */}
 
-        {/* Hidden File Input for Image Search */}
         <input
           type="file"
           accept="image/*"
@@ -216,8 +159,6 @@ export function Header() {
           onChange={handleImageFileChange}
           style={{ display: "none" }}
         />
-
-        {/* Image Search Button (triggers hidden file input) */}
         <Button
           variant="ghost"
           size="icon"
@@ -227,8 +168,6 @@ export function Header() {
         >
           <Images className="w-5 h-5" />
         </Button>
-
-        {/* Main Search Button */}
         <Button
           type="submit"
           size="icon"
@@ -238,7 +177,7 @@ export function Header() {
         </Button>
       </div>
 
-      {/* 3. RIGHT: Icons & Account (remains the same) */}
+      {/* Right Icons */}
       <div className="flex items-center gap-2">
         <Button
           variant="ghost"
@@ -256,11 +195,18 @@ export function Header() {
         >
           <Heart className="w-6 h-6" />
         </Button>
-        <Button variant="ghost" size="icon" aria-label="Cart" asChild>
-          <Link href="/cart">
-            <ShoppingBag className="w-6 h-6" />
-          </Link>
-        </Button>
+
+        {/* Cart Icon with badge */}
+        <Link href="/cart" className="relative">
+          {/* <ShoppingBag className="w-6 h-6" /> */}
+          <span className="w-8 h-8">🛒</span>
+
+          {cartItems.length > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+              {cartItems.length}
+            </span>
+          )}
+        </Link>
 
         <Separator
           orientation="vertical"
@@ -294,8 +240,11 @@ export function Header() {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {/* Sign In / Sign Up Dialog */}
-        <AuthDialog />
+        {/* Auth buttons */}
+        <div className="flex gap-2 ">
+          <AuthDialog type="login" />
+          <AuthDialog type="register" />
+        </div>
       </div>
     </header>
   );
